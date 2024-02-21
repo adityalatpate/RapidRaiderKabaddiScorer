@@ -1,0 +1,49 @@
+package com.rapidraiderscores.rapidraiderscores.controller;
+
+import java.util.List;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
+
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RestController;
+
+import com.rapidraiderscores.rapidraiderscores.entities.TournamentRegisteration;
+import com.rapidraiderscores.rapidraiderscores.services.RegisterService;
+import com.rapidraiderscores.rapidraiderscores.services.TeamService;
+import com.rapidraiderscores.rapidraiderscores.entities.Team;
+
+@RestController
+@RequestMapping("/api/teams")
+public class TeamController {
+	@Autowired
+    private TeamService teamService; // Autowired field for the TeamService
+
+    @Autowired
+    private RegisterService registerService; // Autowired field for the RegisterService (assuming this service manages tournaments)
+
+    
+    @PostMapping("/add")
+    public ResponseEntity<String> addTeamToTournament(@RequestBody Team team, @RequestParam Long tournamentId) {
+        
+    	TournamentRegisteration tournament = registerService.getRegisterTourById(tournamentId);
+        
+        // Call the teamService to add the team to the fetched tournament
+        teamService.addTeamToTournament(team, tournament);
+        
+        // Return a success response
+        return ResponseEntity.ok("Team added to tournament successfully.");
+    }
+
+   
+    @GetMapping("/tournament/{tournamentId}")
+    public ResponseEntity<List<Team>> getAllTeamsByTournament(@PathVariable Long tournamentId) {
+        List<Team> teams = teamService.getAllTeamsByTournament(tournamentId);
+        return ResponseEntity.ok(teams);
+    }
+}
+

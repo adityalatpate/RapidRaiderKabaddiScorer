@@ -1,0 +1,16 @@
+package com.rapidraiderscores.rapidraiderscores.services;
+
+
+import java.util.List;
+
+import com.rapidraiderscores.rapidraiderscores.entities.TournamentRegisteration;
+
+public interface RegisterService {
+	
+	public	TournamentRegisteration addRegisterTour(TournamentRegisteration registerTour);
+	public List<TournamentRegisteration> getAllRegisterTour();
+//	public TournamentRegisteration getRegisterTourById(long regiID);
+	public TournamentRegisteration getRegisterTourById(long tournamentId);
+	public boolean findByPhnNumber(String phoneNumber);
+	
+}

@@ -1,0 +1,11 @@
+package com.rapidraiderscores.rapidraiderscores.repository;
+
+import org.springframework.data.jpa.repository.JpaRepository;
+
+import com.rapidraiderscores.rapidraiderscores.entities.UserRegister;
+
+public interface UserRepo extends JpaRepository {
+	
+	UserRegister findByPhnNumber(String phnNumber);
+
+}

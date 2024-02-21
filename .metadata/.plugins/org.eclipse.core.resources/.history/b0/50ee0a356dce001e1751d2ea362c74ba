@@ -1,0 +1,42 @@
+package com.rapidraiderscores.rapidraiderscores.controller;
+
+package com.rapidraider.controller;
+
+import java.util.List;
+import java.util.Set;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RestController;
+
+
+import com.rapidraiderscores.rapidraiderscores.entities.Team;
+import com.rapidraiderscores.rapidraiderscores.services.RegisterService;
+import com.rapidraiderscores.rapidraiderscores.services.TeamService;
+
+@RestController
+@RequestMapping("/api/teams")
+public class TeamController {
+	@Autowired
+    private TeamService teamService; // Autowired field for the TeamService
+
+	 @PostMapping("/tournament/{tournamentId}")
+	    public ResponseEntity<Team> addTeamToTournament(@PathVariable Long tournamentId, @RequestBody Team team) {
+	        Team createdTeam = teamService.addTeamToTournament(tournamentId, team);
+	        return ResponseEntity.ok(createdTeam);
+	    }
+
+	    @GetMapping("/tournament/{tournamentId}")
+	    public ResponseEntity<Set<Team>> getTeamsByTournament(@PathVariable Long tournamentId) {
+	        Set<Team> teams = teamService.getTeamsByTournament(tournamentId);
+	        return ResponseEntity.ok(teams);
+	    }
+}
+

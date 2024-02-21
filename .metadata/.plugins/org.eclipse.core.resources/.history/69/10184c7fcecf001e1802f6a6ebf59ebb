@@ -1,0 +1,78 @@
+package com.rapidraiderscores.rapidraiderscores.services;
+
+import java.util.List;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import com.rapidraiderscores.rapidraiderscores.exception.EmptyInputException;
+import com.rapidraiderscores.rapidraiderscores.entities.TournamentRegisteration;
+import com.rapidraiderscores.rapidraiderscores.entities.UserRegister;
+import com.rapidraiderscores.rapidraiderscores.repository.TournamentRepo;
+import com.rapidraiderscores.rapidraiderscores.repository.UserRepo;
+
+import jakarta.persistence.EntityNotFoundException;
+import jakarta.transaction.Transactional;
+
+@Service
+@Transactional
+public class RegisterServiceImpl implements RegisterService {
+	
+	@Autowired
+	public TournamentRepo tournamentRepo;
+	
+	@Autowired
+	public UserRepo userRepo;
+
+	@Override
+	public TournamentRegisteration addRegisterTour(TournamentRegisteration registerTour) {		
+		TournamentRegisteration regiTour=tournamentRepo.save(registerTour);
+		return regiTour;
+	}
+	
+	@Override
+	public List<TournamentRegisteration> getAllRegisterTour()
+	{
+		
+		try
+		{
+			List<TournamentRegisteration> regiList=null;
+			regiList = (List<TournamentRegisteration>) tournamentRepo.findAll();
+			if(regiList.isEmpty()) {
+				throw new EmptyInputException("602","Hey list is empty");
+			}
+			return regiList;
+		}
+		catch (Exception e)
+		{
+			e.printStackTrace(); // Print the stack trace for debugging purposes
+	        throw new RuntimeException("Failed to add user: " + e.getMessage());
+		}
+		
+	}
+
+	@Override
+	public boolean checkPhoneNumberExists(String phoneNumber) {
+		UserRegister user = userRepo.findByPhnNumber(phoneNumber);
+        return user != null;
+	}
+
+	@Override
+	public UserRegister addUser(UserRegister userData) {
+		 try {
+		        UserRegister user = (UserRegister) userRepo.save(userData);
+		        return user;
+		    } catch (Exception e) {
+		        // Handle any exceptions that may occur during the save operation
+		        e.printStackTrace(); // Print the stack trace for debugging purposes
+		        throw new RuntimeException("Failed to add user: " + e.getMessage());
+		    }
+	}
+
+//	@Override
+//	public TournamentRegisteration getRegisterTourById(long regiID) {
+//	}
+	
+	
+
+}

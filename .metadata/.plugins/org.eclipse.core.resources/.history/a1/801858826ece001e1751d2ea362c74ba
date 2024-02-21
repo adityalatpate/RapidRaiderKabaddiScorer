@@ -1,0 +1,5 @@
+package com.rapidraiderscores.rapidraiderscores.repository;
+
+public class TeamRepository {
+
+}

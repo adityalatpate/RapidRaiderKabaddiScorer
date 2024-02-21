@@ -1,0 +1,19 @@
+package com.rapidraiderscores.rapidraiderscores.services;
+
+import java.util.Set;
+
+import com.rapidraiderscores.rapidraiderscores.entities.Team;
+
+
+
+public interface TeamService {
+
+	Team addTeamToTournament(Long tournamentId, Team team);
+
+	Set<Team> getTeamsByTournament(Long tournamentId);
+
+	
+
+	
+
+}

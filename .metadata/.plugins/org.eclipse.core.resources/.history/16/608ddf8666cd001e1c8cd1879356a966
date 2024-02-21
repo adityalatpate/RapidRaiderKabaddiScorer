@@ -1,0 +1,19 @@
+package com.rapidraiderscores.rapidraiderscores.repository;
+
+import java.util.List;
+import org.springframework.data.jpa.repository.JpaRepository;
+import com.rapidraiderscores.rapidraiderscores.entities.Team;
+import com.rapidraiderscores.rapidraiderscores.entities.TournamentRegisteration;
+
+
+public interface TeamRepository extends JpaRepository<Team,Long>{
+
+	boolean existsByTeamNameAndTournament(String teamName, TournamentRegisteration tournament);
+
+	List<Team> findAllByTournament(TournamentRegisteration tournament);
+
+	
+	
+
+	
+}

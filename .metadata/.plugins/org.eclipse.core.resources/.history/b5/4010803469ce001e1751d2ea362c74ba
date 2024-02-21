@@ -1,0 +1,42 @@
+package com.rapidraiderscores.rapidraiderscores.services;
+
+
+
+import java.util.List;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import com.rapidraiderscores.rapidraiderscores.entities.Team;
+import com.rapidraiderscores.rapidraiderscores.entities.TournamentRegisteration;
+import com.rapidraiderscores.rapidraiderscores.repository.TeamRepository;
+
+@Service
+public class TeamServiceImpl implements TeamService{
+	
+	@Autowired
+	private TeamRepository teamRepository;
+	@Autowired
+	private RegisterService registerService;
+	
+
+	@Override
+	public void addTeamToTournament(Team team, TournamentRegisteration tournament) {
+		 boolean teamExists = teamRepository.existsByTeamNameAndTournament(team.getTeamName(), tournament);
+	        if (teamExists) {
+	            throw new IllegalArgumentException("Team already exists in the tournament.");
+	        }
+	        team.setTournament(tournament);
+	        teamRepository.save(team);
+		
+	}
+
+
+
+	@Override
+	public List<Team> getAllTeamsByTournament(Long tournamentId) {
+		TournamentRegisteration tournament = registerService.getRegisterTourById(tournamentId);
+        return teamRepository.findAllByTournament(tournament);
+	}
+
+	
+}

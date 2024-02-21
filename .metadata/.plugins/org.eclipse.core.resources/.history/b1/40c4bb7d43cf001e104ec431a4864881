@@ -1,0 +1,5 @@
+package com.rapidraiderscores.rapidraiderscores.exception;
+
+public class InvalidTeamException extends Exception {
+
+}

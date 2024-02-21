@@ -1,0 +1,75 @@
+package com.rapidraiderscores.rapidraiderscores.services;
+
+import java.util.List;
+import java.util.Set;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import com.rapidraiderscores.rapidraiderscores.entities.Team;
+import com.rapidraiderscores.rapidraiderscores.entities.TournamentRegisteration;
+import com.rapidraiderscores.rapidraiderscores.exception.EmptyInputException;
+import com.rapidraiderscores.rapidraiderscores.exception.InvalidTeamException;
+import com.rapidraiderscores.rapidraiderscores.exception.InvalidTournamentException;
+import com.rapidraiderscores.rapidraiderscores.exception.ResourceNotFoundException;
+import com.rapidraiderscores.rapidraiderscores.exception.TeamAlreadyRegisteredException;
+import com.rapidraiderscores.rapidraiderscores.repository.TeamRepository;
+import com.rapidraiderscores.rapidraiderscores.repository.TournamentRepo; 
+
+@Service
+public class TeamServiceImpl implements TeamService{
+	
+	@Autowired
+	private TeamRepository teamRepository;
+
+	 @Autowired
+	    private TournamentRepo tournamentRepo;
+
+	@Override
+	public Team addRegisterTeam(Team team) {
+		
+		Team registeredTeam = teamRepository.save(team);
+		return registeredTeam;
+	}
+
+	@Override
+	public List<Team> getAllRegisterTeam() {
+		List<Team> regiTeamList=null;
+		regiTeamList=(List<Team>) teamRepository.findAll();
+		if(regiTeamList.isEmpty()) {
+			throw new EmptyInputException("602","Hey list is empty");
+		}
+		return regiTeamList;
+	}
+
+	@Override
+	public void registerTeamForTournament(Long teamId, Long tournamentId)throws InvalidTeamException, InvalidTournamentException, TeamAlreadyRegisteredException
+	{
+				
+	}
+
+//	    @Override
+//	    public Team addTeamToTournament(Long tournamentId, Team team) {
+//	        TournamentRegisteration tournament = tournamentRepo.findById(tournamentId)
+//	                .orElseThrow(() -> new ResourceNotFoundException("Tournament not found with id " + tournamentId));
+//
+//	        // Check if team already exists in the tournament
+//	        if (tournament.getTeams().stream().anyMatch(existingTeam -> existingTeam.getTeamName().equals(team.getTeamName()))) {
+//	            throw new RuntimeException("Team already exists in the tournament.");
+//	        }
+//
+////	        team.setTournament(tournament);
+//	        return teamRepository.save(team);
+//	    }
+//
+//	    @Override
+//	    public Set<Team> getTeamsByTournament(Long tournamentId) {
+//	    	TournamentRegisteration tournament = tournamentRepo.findById(tournamentId)
+//	                .orElseThrow(() -> new ResourceNotFoundException("Tournament not found with id " + tournamentId));
+//	        return tournament.getTeams();
+//	    }
+
+		
+	
+}
+

@@ -1,0 +1,5 @@
+package com.rapidraiderscores.rapidraiderscores.repository;
+
+public interface UserRepo {
+
+}

@@ -1,0 +1,69 @@
+package com.rapidraiderscores.rapidraiderscores.controller;
+
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.messaging.simp.SimpMessagingTemplate;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
+
+import com.rapidraiderscores.rapidraiderscores.entities.OtpEntity;
+import com.rapidraiderscores.rapidraiderscores.entities.UserRegister;
+import com.rapidraiderscores.rapidraiderscores.services.SmsService;
+
+@RestController
+@RequestMapping("/userregistercontroller")
+public class UserRegisterationController {
+
+	int otp;
+	
+	@Autowired
+    SmsService service;
+	
+    @Autowired
+    private SimpMessagingTemplate webSocket;
+    
+    private final String  TOPIC_DESTINATION = "/lesson/sms";
+    
+	@PostMapping("/mobileotp")
+	public ResponseEntity<Boolean> sendOtp(@RequestBody UserRegister userRegisterData)
+	{
+		try{
+			
+            this.otp = service.send(userRegisterData);
+			System.out.println(userRegisterData.getPhnNumber());
+			
+		}
+		catch(Exception e)
+		{
+			e.printStackTrace();
+			return new ResponseEntity<>(false,HttpStatus.INTERNAL_SERVER_ERROR);
+		}
+		
+		 webSocket.convertAndSend(TOPIC_DESTINATION, getTimeStamp() + ": SMS has been sent!: "+userRegisterData.getPhnNumber());
+		 return new ResponseEntity<Boolean>(true,HttpStatus.OK);
+	}
+	
+	private String getTimeStamp() {
+	       return DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss").format(LocalDateTime.now());
+	}
+	
+	@PostMapping("/otpverify")
+	public ResponseEntity<String> verifyOtp(@RequestBody OtpEntity otp)
+	{
+		if(this.otp == otp.getOtp())
+		{
+			return new ResponseEntity<>("OTP matched.", HttpStatus.OK);
+        }
+		else
+		{
+			return new ResponseEntity<>("Invalid OTP", HttpStatus.BAD_REQUEST);
+		}
+		
+	}
+}

@@ -1,0 +1,27 @@
+package com.rapidraiderscores.rapidraiderscores.entities;
+
+public class OtpEntity {
+	
+	private String otp;
+
+	
+	public OtpEntity() {
+		super();
+		
+	}
+
+	public OtpEntity(String otp) {
+		super();
+		this.otp = otp;
+	}
+
+	public String getOtp() {
+		return otp;
+	}
+
+	public void setOtp(String otp) {
+		this.otp = otp;
+	}
+	
+
+}

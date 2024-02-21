@@ -1,0 +1,8 @@
+package com.rapidraiderscores.rapidraiderscores.entities;
+
+public class VerificationRequest {
+	
+	private OtpEntity otp;
+    private UserRegister userRegisterData;
+
+}

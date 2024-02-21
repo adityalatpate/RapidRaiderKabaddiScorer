@@ -1,0 +1,9 @@
+package com.rapidraiderscores.rapidraiderscores.repository;
+
+import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.stereotype.Repository;
+
+@Repository
+public interface TournamentRegisterationRepository extends JpaRepository<TournamentRegisteration, Long> {
+    // You can define additional methods here if needed
+}

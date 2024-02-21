@@ -1,0 +1,5 @@
+package com.rapidraiderscores.rapidraiderscores.services;
+
+public class TeamServiceImpl {
+
+}

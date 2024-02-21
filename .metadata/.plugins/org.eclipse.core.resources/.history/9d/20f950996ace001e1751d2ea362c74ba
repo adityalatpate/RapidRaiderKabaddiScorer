@@ -1,0 +1,79 @@
+package com.rapidraiderscores.rapidraiderscores.entities;
+
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
+import jakarta.persistence.Table;
+
+@Entity
+@Table(name = "Team")
+public class Team {
+	 @Id
+	    @GeneratedValue(strategy = GenerationType.IDENTITY)
+	    private Long id;
+
+	    private String teamName;
+	    
+	    private String captainName; 
+
+	    @ManyToOne
+	    @JoinColumn(name = "tournament_id")
+	    private TournamentRegisteration tournament;
+
+		public Long getId() {
+			return id;
+		}
+
+		public void setId(Long id) {
+			this.id = id;
+		}
+
+		public String getTeamName() {
+			return teamName;
+		}
+
+		public void setTeamName(String teamName) {
+			this.teamName = teamName;
+		}
+
+		public String getCaptainName() {
+			return captainName;
+		}
+
+		public void setCaptainName(String captainName) {
+			this.captainName = captainName;
+		}
+
+		public RegisterTour getTournament() {
+			return tournament;
+		}
+
+		public void setTournament(RegisterTour tournament) {
+			this.tournament = tournament;
+		}
+
+		@Override
+		public String toString() {
+			return "Team [id=" + id + ", teamName=" + teamName + ", captainName=" + captainName + ", tournament="
+					+ tournament + "]";
+		}
+
+		public Team() {
+			super();
+			// TODO Auto-generated constructor stub
+		}
+
+		public Team(Long id, String teamName, String captainName, RegisterTour tournament) {
+			super();
+			this.id = id;
+			this.teamName = teamName;
+			this.captainName = captainName;
+			this.tournament = tournament;
+		}
+    
+    
+}
+

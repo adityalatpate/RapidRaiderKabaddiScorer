@@ -1,0 +1,9 @@
+package com.rapidraiderscores.rapidraiderscores.exception;
+
+public class TeamAlreadyRegisteredException extends Exception {
+
+	public TeamAlreadyRegisteredException(String string) {
+		// TODO Auto-generated constructor stub
+	}
+
+}

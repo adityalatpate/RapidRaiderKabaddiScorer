@@ -1,0 +1,5 @@
+package com.rapidraiderscores.rapidraiderscores.entities;
+
+public class OtpEntity {
+
+}

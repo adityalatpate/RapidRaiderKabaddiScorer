@@ -1,0 +1,9 @@
+package com.rapidraiderscores.rapidraiderscores.exception;
+
+public class InvalidTeamException extends Exception {
+
+	public InvalidTeamException(String string) {
+		// TODO Auto-generated constructor stub
+	}
+	
+}
