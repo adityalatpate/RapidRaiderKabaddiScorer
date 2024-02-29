@@ -4,7 +4,11 @@ import MainNavbar from './Components/MainNavbar';
 import {Routes, Route, BrowserRouter} from 'react-router-dom';
 import LoginComponent from './Components/LoginComponent';
 import AddTeamForm from './Components/AddTeamForm';
-import RegisterNewTeam from './Components/RegisterNewTeam';
+import StartTournament from './Components/StartTournament';
+import Match from './Components/Match';
+
+
+import KabaddiInfo from './Components/KabaddiInfo';
 
 
 function App() {
@@ -13,9 +17,13 @@ function App() {
       <BrowserRouter>
         <Routes>
           <Route index element = {<LoginComponent/>}/>
+          <Route path = "/login" element = {<LoginComponent/>}/>
           <Route path = "/main" element = {<MainNavbar/>}/>
           <Route path = "/addteam" element = {<AddTeamForm/>}/>
-          <Route path = "/makenewteam" element = {<RegisterNewTeam/>}/>       
+          {/* <Route path = "/makenewteam" element = {<RegisterNewTeam/>}/> */}
+          <Route path = "/starttour" element = {<StartTournament/>}/>
+          <Route path = "/match" element = {<Match/>}/>
+          <Route path = "/kabaddiinfo" element = {<KabaddiInfo/>}/>
         </Routes>
       </BrowserRouter>
     </div>

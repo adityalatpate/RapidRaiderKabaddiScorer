@@ -1,0 +1,21 @@
+.marquee-container {
+    width: 100%;
+    overflow: hidden;
+    padding-left: 50%;
+}
+
+.marquee-image {
+    animation: marquee 5s linear infinite alternate;
+}
+
+.marquee-text {
+    color: #333; /* Dark color for contrast */
+    font-size: 18px;
+    font-weight: bold;
+    padding: 5px 0;
+}
+
+@keyframes marquee {
+    0% { transform: translateX(0%); }
+    100% { transform: translateX(-100%); }
+}

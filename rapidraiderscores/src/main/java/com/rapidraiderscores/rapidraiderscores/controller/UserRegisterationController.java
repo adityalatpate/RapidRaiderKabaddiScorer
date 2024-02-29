@@ -40,7 +40,7 @@ public class UserRegisterationController {
 	{
 		try{
 			
-            //this.otp = service.send(userRegisterData);
+//            this.otp = service.send(userRegisterData);
 			System.out.println("hii");
 		}
 		catch(Exception e)

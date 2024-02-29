@@ -12,6 +12,7 @@ public interface RegisterService {
 	public  List<TournamentRegisteration> getAllRegisterTour();	
 	public boolean checkPhoneNumberExists(String phoneNumber);
 	public	UserRegister addUser(UserRegister userData);
+	void deleteOldData();
 	
 	
 }

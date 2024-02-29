@@ -66,7 +66,17 @@ public class TeamServiceImpl implements TeamService{
         TeamRegistration teamRegistration = new TeamRegistration(team, tournament);
         tournamentRegistrationRepository.save(teamRegistration);
 		
-	}	
+	}
+
+	@Override
+	public List<TeamRegistration> getAllTeamRegisteredByTourID(TournamentRegisteration tournament) {
+	    List<TeamRegistration> teamsRegis = tournamentRegistrationRepository.findByTournament(tournament);
+	    if(teamsRegis.isEmpty()) {
+			throw new EmptyInputException("602","Hey list is empty");
+		}
+	    return teamsRegis;
+	}
+	
 	
 }
 

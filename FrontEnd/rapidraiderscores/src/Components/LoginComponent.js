@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { Form, Button } from 'react-bootstrap';
 import { sendLoginData } from '../Services/sendLoginData';
 import { verifyOtp } from '../Services/verifyOtp';
+import { useNavigate } from 'react-router-dom';
 
 const LoginComponent = () => {
 
@@ -10,7 +11,7 @@ const LoginComponent = () => {
         firstName: '',
         lastName: ''
     });
-
+    const navigate = useNavigate();
     const [errors, setErrors] = useState({});
 
     const [showOTPField, setShowOTPField] = useState(false); // State to manage OTP field visibility
@@ -47,12 +48,14 @@ const LoginComponent = () => {
           if(resp === "OTP matched. Account Already Exist.")
           {
                 window.alert(resp + " Logging in to your Account...");
-                window.location.href = "/main";
+                navigate('/main', { state: { loginInfo } });
+                sessionStorage.setItem("PhoneNumber",loginInfo.phnNumber);
           }
           else
           {
                 window.alert(resp + " Registering Your Account...");
-                window.location.href = "/main";
+                navigate('/main', { state: { loginInfo } });
+                sessionStorage.setItem("PhoneNumber", loginInfo.phnNumber);
           }
 
             if (resp.status === 200) 
@@ -230,7 +233,7 @@ const LoginComponent = () => {
                 <br />
 
                 {/* Conditional rendering of OTP field and verify button */}
-                {/* {showOTPField && (  */}
+                 {showOTPField && (  
                     <div>
                         <Form.Group controlId="otp">
                             <Form.Label><b>Enter OTP:</b></Form.Label>
@@ -247,7 +250,7 @@ const LoginComponent = () => {
                             Verify
                         </Button>
                     </div>
-                {/* )} */}
+                )} 
             </div>
         </div>
     );

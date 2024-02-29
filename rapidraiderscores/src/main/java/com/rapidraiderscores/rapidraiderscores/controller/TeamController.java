@@ -17,7 +17,8 @@ import com.rapidraiderscores.rapidraiderscores.exception.InvalidTeamException;
 import com.rapidraiderscores.rapidraiderscores.exception.InvalidTournamentException;
 import com.rapidraiderscores.rapidraiderscores.exception.TeamAlreadyRegisteredException;
 import com.rapidraiderscores.rapidraiderscores.services.TeamService;
-
+import com.rapidraiderscores.rapidraiderscores.entities.TeamRegistration;
+import com.rapidraiderscores.rapidraiderscores.entities.TournamentRegisteration;
 
 @RestController
 @RequestMapping("/api/teams")
@@ -46,8 +47,19 @@ public class TeamController {
 	        return ResponseEntity.ok(listRegisTeam);
 	    }
 	}
-
-    
+	
+	@PostMapping("/allteamsregisbytourid")
+	public ResponseEntity<?> getAllTeamsByTournamentId(@RequestBody TournamentRegisteration tournament) {
+	    List<TeamRegistration> listRegisTeam = teamService.getAllTeamRegisteredByTourID(tournament);
+	    System.out.println(listRegisTeam);
+	    if (listRegisTeam.isEmpty()) {
+	        // If the list is empty, return a custom error response
+	        return ResponseEntity.status(HttpStatus.NOT_FOUND).body("No registered tournaments found.");
+	    } else {
+	        // If the list is not empty, return the list of registered tournaments
+	        return ResponseEntity.ok(listRegisTeam);
+	    }
+	}
 
     @PostMapping("/register/{tournamentId}")
     public ResponseEntity<String> registerTeam(@PathVariable Long tournamentId, @RequestBody Long teamId) {

@@ -1,10 +1,12 @@
 package com.rapidraiderscores.rapidraiderscores.services;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
+import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 
 import com.rapidraiderscores.rapidraiderscores.exception.EmptyInputException;
@@ -73,6 +75,19 @@ public class RegisterServiceImpl implements RegisterService {
 		        throw new RuntimeException("Failed to add user: " + e.getMessage());
 		    }
 	}
+	
+	 	@Scheduled(cron = "0 0 0 1 1 *")
+	    public void deleteOldDataAutomatically() {
+	        deleteOldData();
+	    }
+	
+	  @Transactional
+	  @Override 
+	  public void deleteOldData() 
+	  { 
+		  LocalDate oneYearAgo = LocalDate.now().minusYears(1); tournamentRepo.deleteOldData(oneYearAgo);
+	  
+	  }
 
 //	@Override
 //	public TournamentRegisteration getRegisterTourById(long regiID) {

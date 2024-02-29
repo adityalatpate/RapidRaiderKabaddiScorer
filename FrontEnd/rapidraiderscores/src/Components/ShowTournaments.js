@@ -4,19 +4,24 @@ import { Button, Card, Form } from 'react-bootstrap';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faLocationDot } from '@fortawesome/free-solid-svg-icons';
 import {faCalendarDays} from '@fortawesome/free-solid-svg-icons';
+import { faPhone } from '@fortawesome/free-solid-svg-icons';
 import KabaddiChampionshipImage1 from '../Assests/KabaddiChampionship.png';
 import KabaddiChampionshipImage2 from '../Assests/KabaddiChampionship2.png';
 import KabaddiChampionshipImage3 from '../Assests/KabaddiChampionship3.png';
 import { useNavigate } from 'react-router-dom';
+import KabaddiChampionshipImage4 from '../Assests/KabaddiChampionship4.jpg';
 
 
 
-const ShowTournament = () => 
+const ShowTournament = (props) => 
 {
     const [tournaments, setTournaments] = useState([]);
-    const images = [KabaddiChampionshipImage1, KabaddiChampionshipImage2, KabaddiChampionshipImage3]
+    const images = [KabaddiChampionshipImage1, KabaddiChampionshipImage2, KabaddiChampionshipImage3, KabaddiChampionshipImage4]
     const [selectedLocations, setSelectedLocations] = useState([]);
     const navigate = useNavigate();
+    const phone = sessionStorage.getItem("PhoneNumber")
+    console.log(sessionStorage.getItem("PhoneNumber"));
+    console.log(props);
     // Function to handle checkbox change
     const handleCheckboxChange = (location) => {
         // Toggle selection status of the location
@@ -27,8 +32,10 @@ const ShowTournament = () =>
         }
     };
 
-    const handleRegisterClick  = () => {
-        navigate('/addteam', { state:{tournaments }});
+    const handleRegisterClick  = (particularTournamentData) => {
+        console.log(particularTournamentData);
+        navigate('/addteam', { state:{particularTournamentData}});
+        sessionStorage.setItem("TournamentId",particularTournamentData.tournamentId);
     };
 
     useEffect(() => {
@@ -54,6 +61,11 @@ const ShowTournament = () =>
         const month = new Intl.DateTimeFormat('en', { month: 'short' }).format(date);
         const year = date.getFullYear();
         return `${day}-${month}-${year}`;
+    };
+
+    const startTournament  = (particularTournamentData) => {
+        console.log(particularTournamentData);
+        navigate('/starttour', { state:{particularTournamentData}});
     };
 
     return (
@@ -91,8 +103,12 @@ const ShowTournament = () =>
                                         <br />
                                         <FontAwesomeIcon icon={faLocationDot} /> &nbsp;
                                         {tournament.locationVenue}
+                                        <br />
+                                        <FontAwesomeIcon icon={faPhone} /> &nbsp;
+                                        {tournament.phnNumber}
                                     </Card.Text>
-                                    <Button variant="primary" onClick={handleRegisterClick }>Register</Button>
+                                    <Button variant="primary" onClick={() => handleRegisterClick(tournament)} disabled={phone !== tournament.phnNumber}>Register</Button> &nbsp;&nbsp;&nbsp;&nbsp;
+                                    <Button variant="primary" onClick={()=> startTournament(tournament)} disabled={phone !== tournament.phnNumber}>Start Tournament</Button>
                                 </Card.Body>
                             </Card>    
                         </div>
